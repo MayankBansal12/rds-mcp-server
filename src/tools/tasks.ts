@@ -1,14 +1,17 @@
-import { z } from "zod";
 import { makeApiRequest } from "../helper";
+import { z } from "zod";
 const BASE_URL =
   process.env.API_BASE_URL || "https://staging-api.realdevsquad.com";
 
 export const getAllTasksSchema = {
-  size: z.number(),
+  size: z.number().default(5).describe("Number of tasks to fetch"),
 };
 
-export const getAllTasksHandler = async (request: any) => {
-  const { size = 5 } = request.params.arguments;
+type getAllTasksArgs = {
+  size?: number;
+};
+
+export const getAllTasksHandler = async ({ size }: getAllTasksArgs) => {
   const tasksData = await makeApiRequest(
     `${BASE_URL}/tasks?size=${Number(size)}`,
   );
@@ -18,22 +21,15 @@ export const getAllTasksHandler = async (request: any) => {
       content: [
         { type: "text", text: "Couldn't retrieve tasks or tasks not found" },
       ],
-    };
+    } as any;
   }
 
   return {
     content: [
       {
         type: "text",
-        text: `Here is the tasks data: ${JSON.stringify(tasksData)}`,
+        text: `Tasks Data: ${JSON.stringify(tasksData, null, 2)}`,
       },
     ],
-  };
-};
-
-export const getAllTasksTool = {
-  name: "getAllTasks",
-  description: "Fetch all tasks",
-  inputSchema: getAllTasksSchema,
-  handler: getAllTasksHandler,
+  } as any;
 };

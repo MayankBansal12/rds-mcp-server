@@ -1,12 +1,8 @@
-import { Server } from "@modelcontextprotocol/sdk/server";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
-import { getAllTasksTool } from "./tools/tasks";
+import { getAllTasksSchema, getAllTasksHandler } from "./tools/tasks";
 
-const server = new Server(
+const server = new McpServer(
   {
     name: "rds-mcp-server",
     version: "1.0.0",
@@ -18,38 +14,21 @@ const server = new Server(
   },
 );
 
-export const allTools = [
+server.registerTool(
+  "getAllTasks",
   {
-    name: getAllTasksTool.name,
-    description: getAllTasksTool.description,
-    inputSchema: getAllTasksTool.inputSchema,
+    description: "Fetch all tasks",
+    inputSchema: getAllTasksSchema,
   },
-];
-
-export const toolHandlers = {
-  [getAllTasksTool.name]: getAllTasksTool.handler,
-};
-
-server.setRequestHandler(ListToolsRequestSchema, async () => {
-  return { tools: allTools };
-});
-
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name } = request.params;
-  const handler = toolHandlers[name];
-  if (!handler) {
-    throw new Error(`Unknown tool: ${name}`);
-  }
-  return await handler(request);
-});
+  getAllTasksHandler,
+);
 
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.log("RDS Server started successfully");
   server.sendLoggingMessage({
     level: "info",
-    data: "RDS Server started successfully",
+    data: "RDS MCP Server started successfully",
   });
 }
 
