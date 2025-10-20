@@ -6,10 +6,17 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { getAllTasksTool } from "./tools/tasks";
 
-const server = new Server({
-  name: "rds-mcp-server",
-  version: "1.0.0",
-});
+const server = new Server(
+  {
+    name: "rds-mcp-server",
+    version: "1.0.0",
+  },
+  {
+    capabilities: {
+      tools: {},
+    },
+  },
+);
 
 export const allTools = [
   {
@@ -39,6 +46,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
+  console.log("RDS Server started successfully");
   server.sendLoggingMessage({
     level: "info",
     data: "RDS Server started successfully",
@@ -48,7 +56,7 @@ async function main() {
 main().catch((err) => {
   server.sendLoggingMessage({
     level: "error",
-    data: "Error in starting server!",
+    data: `Error in starting server: ${err.message || err}`,
   });
   process.exit(1);
 });
