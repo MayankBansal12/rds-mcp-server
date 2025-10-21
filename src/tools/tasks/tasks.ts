@@ -1,4 +1,4 @@
-import { makeApiRequest } from "../helper";
+import { makeApiRequest } from "../../helper";
 import { z } from "zod";
 const BASE_URL =
   process.env.API_BASE_URL || "https://staging-api.realdevsquad.com";
