@@ -94,7 +94,7 @@ export const getExtensionRequestsHandler = async ({
   status,
   taskId,
   assigneeId,
-  size,
+  size = 10,
 }: GetExtensionRequestsArgs) => {
   const searchParams = new URLSearchParams();
   const filterDescription = [];

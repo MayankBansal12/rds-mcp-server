@@ -3,11 +3,9 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import {
   getTaskRequestSchema,
   getTaskRequestsHandler,
-} from "./tools/requests/getRequests";
-import {
   getExtensionRequestsSchema,
   getExtensionRequestsHandler,
-} from "./tools/requests/getExtensionRequests";
+} from "./tools/requests/getRequests";
 import {
   taskProgressHandler,
   taskProgressSchema,
