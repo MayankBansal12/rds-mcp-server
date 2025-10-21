@@ -1,7 +1,5 @@
-import { makeApiRequest } from "../helper";
+import { makeApiRequest } from "../../helper";
 import { z } from "zod";
-const BASE_URL =
-  process.env.API_BASE_URL || "https://staging-api.realdevsquad.com";
 
 export const getAllTasksSchema = {
   size: z.number().default(5).describe("Number of tasks to fetch"),
@@ -13,7 +11,7 @@ type getAllTasksArgs = {
 
 export const getAllTasksHandler = async ({ size }: getAllTasksArgs) => {
   const tasksData = await makeApiRequest(
-    `${BASE_URL}/tasks?size=${Number(size)}`,
+    `${process.env.API_BASE_URL}/tasks?size=${Number(size)}`,
   );
 
   if (!tasksData) {

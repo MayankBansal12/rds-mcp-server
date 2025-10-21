@@ -1,6 +1,15 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { getAllTasksSchema, getAllTasksHandler } from "./tools/tasks";
+import { getAllTasksSchema, getAllTasksHandler } from "./tools/tasks/tasks";
+import {
+  getUserTasksSchema,
+  getUserTasksHandler,
+} from "./tools/tasks/userTasks";
+import {
+  taskProgressSchema,
+  taskProgressHandler,
+} from "./tools/tasks/taskProgress";
+import { taskStatusSchema, taskStatusHandler } from "./tools/tasks/taskStatus";
 
 const server = new McpServer(
   {
@@ -21,6 +30,33 @@ server.registerTool(
     inputSchema: getAllTasksSchema,
   },
   getAllTasksHandler,
+);
+
+server.registerTool(
+  "getUserTasks",
+  {
+    description: "Fetch all user tasks",
+    inputSchema: getUserTasksSchema,
+  },
+  getUserTasksHandler,
+);
+
+server.registerTool(
+  "updateTaskProgress",
+  {
+    description: "Update ongoing progress for a task",
+    inputSchema: taskProgressSchema,
+  },
+  taskProgressHandler,
+);
+
+server.registerTool(
+  "updateTaskStatus",
+  {
+    description: "Update status or percent completion for a task",
+    inputSchema: taskStatusSchema,
+  },
+  taskStatusHandler,
 );
 
 async function main() {
