@@ -17,6 +17,7 @@ import {
   getUserProfileSchema,
   getUserProfileHandler,
 } from "./tools/users/userProfile";
+import { userSearchSchema, userSearchHandler } from "./tools/users/userSearch";
 
 const server = new McpServer(
   {
@@ -91,6 +92,15 @@ server.registerTool(
     inputSchema: getUserProfileSchema,
   },
   getUserProfileHandler,
+);
+
+server.registerTool(
+  "searchUsers",
+  {
+    description: "Search users with state and roles filters",
+    inputSchema: userSearchSchema,
+  },
+  userSearchHandler,
 );
 
 async function main() {
