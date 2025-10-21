@@ -18,6 +18,12 @@ import {
   getUserProfileHandler,
 } from "./tools/users/userProfile";
 import { userSearchSchema, userSearchHandler } from "./tools/users/userSearch";
+import {
+  applyOooSchema,
+  applyOooHandler,
+  cancelOooSchema,
+  cancelOooHandler,
+} from "./tools/users/ooo";
 
 const server = new McpServer(
   {
@@ -101,6 +107,24 @@ server.registerTool(
     inputSchema: userSearchSchema,
   },
   userSearchHandler,
+);
+
+server.registerTool(
+  "applyOoo",
+  {
+    description: "Apply OOO status for current user",
+    inputSchema: applyOooSchema,
+  },
+  applyOooHandler,
+);
+
+server.registerTool(
+  "cancelOoo",
+  {
+    description: "Cancel OOO status for current user",
+    inputSchema: cancelOooSchema,
+  },
+  cancelOooHandler,
 );
 
 async function main() {
