@@ -11,6 +11,12 @@ import {
 } from "./tools/tasks/taskProgress";
 import { taskStatusSchema, taskStatusHandler } from "./tools/tasks/taskStatus";
 import { getAllUsersSchema, getAllUsersHandler } from "./tools/users/allUsers";
+import {
+  getUserByUsernameSchema,
+  getUserByUsernameHandler,
+  getUserProfileSchema,
+  getUserProfileHandler,
+} from "./tools/users/userProfile";
 
 const server = new McpServer(
   {
@@ -67,6 +73,24 @@ server.registerTool(
     inputSchema: getAllUsersSchema,
   },
   getAllUsersHandler,
+);
+
+server.registerTool(
+  "getUserByUsername",
+  {
+    description: "Fetch a specific user by username",
+    inputSchema: getUserByUsernameSchema,
+  },
+  getUserByUsernameHandler,
+);
+
+server.registerTool(
+  "getUserProfile",
+  {
+    description: "Fetch current user's profile",
+    inputSchema: getUserProfileSchema,
+  },
+  getUserProfileHandler,
 );
 
 async function main() {
