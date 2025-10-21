@@ -1,6 +1,8 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
+  createExtensionRequestHandler,
+  createExtensionRequestSchema,
   createTaskRequestHandler,
   createTaskRequestSchema,
 } from "./tools/requests/createRequests";
@@ -163,6 +165,15 @@ server.registerTool(
     inputSchema: createTaskRequestSchema,
   },
   createTaskRequestHandler,
+);
+
+server.registerTool(
+  "createExtensionRequest",
+  {
+    description: "Create a new extension request (ER) for a task",
+    inputSchema: createExtensionRequestSchema,
+  },
+  createExtensionRequestHandler,
 );
 
 async function main() {

@@ -69,3 +69,62 @@ export const createTaskRequestHandler = async ({
     ],
   } as any;
 };
+
+export const createExtensionRequestSchema = {
+  assignee: z.string().describe("Assignee username for the task"),
+  newEndsOn: z.number().describe("New end timestamp for the task"),
+  oldEndsOn: z.number().describe("Original end timestamp for the task"),
+  reason: z.string().describe("Reason for extension request"),
+  taskId: z.string().describe("Task ID for the extension request"),
+  title: z.string().describe("Title for the extension request"),
+};
+
+type CreateExtensionRequestArgs = {
+  assignee: string;
+  newEndsOn: number;
+  oldEndsOn: number;
+  reason: string;
+  taskId: string;
+  title: string;
+};
+
+export const createExtensionRequestHandler = async ({
+  assignee,
+  newEndsOn,
+  oldEndsOn,
+  reason,
+  taskId,
+  title,
+}: CreateExtensionRequestArgs) => {
+  const requestBody = {
+    assignee,
+    newEndsOn,
+    oldEndsOn,
+    reason,
+    status: "PENDING" as const,
+    taskId,
+    title,
+  };
+
+  const extensionRequestEndpoint = `${process.env.API_BASE_URL}/extension-requests`;
+  const extensionRequestData = await makeApiRequest(
+    extensionRequestEndpoint,
+    "POST",
+    requestBody,
+  );
+
+  if (!extensionRequestData) {
+    return {
+      content: [{ type: "text", text: "Failed to create extension request." }],
+    } as any;
+  }
+
+  return {
+    content: [
+      {
+        type: "text",
+        text: `Extension request created successfully: ${JSON.stringify(extensionRequestData, null, 2)}`,
+      },
+    ],
+  } as any;
+};
