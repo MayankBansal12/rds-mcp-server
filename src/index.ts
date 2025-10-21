@@ -1,10 +1,14 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
+  createTaskRequestHandler,
+  createTaskRequestSchema,
+} from "./tools/requests/createRequests";
+import {
+  getExtensionRequestsHandler,
+  getExtensionRequestsSchema,
   getTaskRequestSchema,
   getTaskRequestsHandler,
-  getExtensionRequestsSchema,
-  getExtensionRequestsHandler,
 } from "./tools/requests/getRequests";
 import {
   taskProgressHandler,
@@ -150,6 +154,15 @@ server.registerTool(
     inputSchema: getExtensionRequestsSchema,
   },
   getExtensionRequestsHandler,
+);
+
+server.registerTool(
+  "createTaskRequest",
+  {
+    description: "Create a new task creation request (TCR)",
+    inputSchema: createTaskRequestSchema,
+  },
+  createTaskRequestHandler,
 );
 
 async function main() {
