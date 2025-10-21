@@ -8,3 +8,9 @@ export enum Status {
   ASSIGNED = "ASSIGNED",
   NEEDS_REVIEW = "NEEDS_REVIEW",
 }
+
+export enum State {
+  ACTIVE = "ACTIVE",
+  OOO = "OOO",
+  IDLE = "IDLE",
+}

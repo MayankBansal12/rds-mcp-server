@@ -10,6 +10,20 @@ import {
   taskProgressHandler,
 } from "./tools/tasks/taskProgress";
 import { taskStatusSchema, taskStatusHandler } from "./tools/tasks/taskStatus";
+import { getAllUsersSchema, getAllUsersHandler } from "./tools/users/allUsers";
+import {
+  getUserByUsernameSchema,
+  getUserByUsernameHandler,
+  getUserProfileSchema,
+  getUserProfileHandler,
+} from "./tools/users/userProfile";
+import { userSearchSchema, userSearchHandler } from "./tools/users/userSearch";
+import {
+  applyOooSchema,
+  applyOooHandler,
+  cancelOooSchema,
+  cancelOooHandler,
+} from "./tools/users/ooo";
 
 const server = new McpServer(
   {
@@ -57,6 +71,60 @@ server.registerTool(
     inputSchema: taskStatusSchema,
   },
   taskStatusHandler,
+);
+
+server.registerTool(
+  "getAllUsers",
+  {
+    description: "Fetch all active users",
+    inputSchema: getAllUsersSchema,
+  },
+  getAllUsersHandler,
+);
+
+server.registerTool(
+  "getUserByUsername",
+  {
+    description: "Fetch a specific user by username",
+    inputSchema: getUserByUsernameSchema,
+  },
+  getUserByUsernameHandler,
+);
+
+server.registerTool(
+  "getUserProfile",
+  {
+    description: "Fetch current user's profile",
+    inputSchema: getUserProfileSchema,
+  },
+  getUserProfileHandler,
+);
+
+server.registerTool(
+  "searchUsers",
+  {
+    description: "Search users with state and roles filters",
+    inputSchema: userSearchSchema,
+  },
+  userSearchHandler,
+);
+
+server.registerTool(
+  "applyOoo",
+  {
+    description: "Apply OOO status for current user",
+    inputSchema: applyOooSchema,
+  },
+  applyOooHandler,
+);
+
+server.registerTool(
+  "cancelOoo",
+  {
+    description: "Cancel OOO status for current user",
+    inputSchema: cancelOooSchema,
+  },
+  cancelOooHandler,
 );
 
 async function main() {
