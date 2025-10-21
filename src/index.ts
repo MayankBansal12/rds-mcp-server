@@ -9,6 +9,7 @@ import {
   taskProgressSchema,
   taskProgressHandler,
 } from "./tools/tasks/taskProgress";
+import { taskStatusSchema, taskStatusHandler } from "./tools/tasks/taskStatus";
 
 const server = new McpServer(
   {
@@ -47,6 +48,15 @@ server.registerTool(
     inputSchema: taskProgressSchema,
   },
   taskProgressHandler,
+);
+
+server.registerTool(
+  "updateTaskStatus",
+  {
+    description: "Update status or percent completion for a task",
+    inputSchema: taskStatusSchema,
+  },
+  taskStatusHandler,
 );
 
 async function main() {
