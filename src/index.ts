@@ -5,6 +5,10 @@ import {
   getUserTasksSchema,
   getUserTasksHandler,
 } from "./tools/tasks/userTasks";
+import {
+  taskProgressSchema,
+  taskProgressHandler,
+} from "./tools/tasks/taskProgress";
 
 const server = new McpServer(
   {
@@ -34,6 +38,15 @@ server.registerTool(
     inputSchema: getUserTasksSchema,
   },
   getUserTasksHandler,
+);
+
+server.registerTool(
+  "updateTaskProgress",
+  {
+    description: "Update ongoing progress for a task",
+    inputSchema: taskProgressSchema,
+  },
+  taskProgressHandler,
 );
 
 async function main() {
