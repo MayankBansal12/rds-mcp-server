@@ -10,6 +10,7 @@ import {
   taskProgressHandler,
 } from "./tools/tasks/taskProgress";
 import { taskStatusSchema, taskStatusHandler } from "./tools/tasks/taskStatus";
+import { getAllUsersSchema, getAllUsersHandler } from "./tools/users/allUsers";
 
 const server = new McpServer(
   {
@@ -57,6 +58,15 @@ server.registerTool(
     inputSchema: taskStatusSchema,
   },
   taskStatusHandler,
+);
+
+server.registerTool(
+  "getAllUsers",
+  {
+    description: "Fetch all active users",
+    inputSchema: getAllUsersSchema,
+  },
+  getAllUsersHandler,
 );
 
 async function main() {
