@@ -5,6 +5,10 @@ import {
   getTaskRequestsHandler,
 } from "./tools/requests/getRequests";
 import {
+  getExtensionRequestsSchema,
+  getExtensionRequestsHandler,
+} from "./tools/requests/getExtensionRequests";
+import {
   taskProgressHandler,
   taskProgressSchema,
 } from "./tools/tasks/taskProgress";
@@ -138,6 +142,16 @@ server.registerTool(
     inputSchema: getTaskRequestSchema,
   },
   getTaskRequestsHandler,
+);
+
+server.registerTool(
+  "getAllExtensionRequests",
+  {
+    description:
+      "Fetch all extension requests with status, taskId, and assigneeId filters",
+    inputSchema: getExtensionRequestsSchema,
+  },
+  getExtensionRequestsHandler,
 );
 
 async function main() {

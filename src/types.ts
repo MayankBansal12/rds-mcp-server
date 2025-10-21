@@ -20,3 +20,9 @@ export enum TaskRequestStatus {
   APPROVED = "approved",
   REJECTED = "rejected",
 }
+
+export enum ExtensionRequestStatus {
+  PENDING = "PENDING",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+}
