@@ -52,3 +52,39 @@ export const taskProgressHandler = async ({
     ],
   } as any;
 };
+
+export const getTaskProgressSchema = {
+  taskId: z.string().describe("ID of the task to fetch progress updates for"),
+};
+
+type GetTaskProgressArgs = {
+  taskId: string;
+};
+
+export const getTaskProgressHandler = async ({
+  taskId,
+}: GetTaskProgressArgs) => {
+  const progressEndpoint = `${process.env.API_BASE_URL}/progresses?taskId=${taskId}`;
+
+  const progressData = await makeApiRequest(progressEndpoint);
+
+  if (!progressData) {
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Failed to fetch progress updates for task: ${taskId}`,
+        },
+      ],
+    } as any;
+  }
+
+  return {
+    content: [
+      {
+        type: "text",
+        text: `Task progress updates for ${taskId}: ${JSON.stringify(progressData, null, 2)}`,
+      },
+    ],
+  } as any;
+};

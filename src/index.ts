@@ -13,6 +13,8 @@ import {
   getTaskRequestsHandler,
 } from "./tools/requests/getRequests";
 import {
+  getTaskProgressHandler,
+  getTaskProgressSchema,
   taskProgressHandler,
   taskProgressSchema,
 } from "./tools/tasks/taskProgress";
@@ -174,6 +176,15 @@ server.registerTool(
     inputSchema: createExtensionRequestSchema,
   },
   createExtensionRequestHandler,
+);
+
+server.registerTool(
+  "getTaskProgress",
+  {
+    description: "Fetch all progress updates for a task",
+    inputSchema: getTaskProgressSchema,
+  },
+  getTaskProgressHandler,
 );
 
 async function main() {
