@@ -1,29 +1,43 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { getAllTasksSchema, getAllTasksHandler } from "./tools/tasks/tasks";
 import {
-  getUserTasksSchema,
-  getUserTasksHandler,
-} from "./tools/tasks/userTasks";
+  createExtensionRequestHandler,
+  createExtensionRequestSchema,
+  createTaskRequestHandler,
+  createTaskRequestSchema,
+} from "./tools/requests/createRequests";
 import {
-  taskProgressSchema,
+  getExtensionRequestsHandler,
+  getExtensionRequestsSchema,
+  getTaskRequestSchema,
+  getTaskRequestsHandler,
+} from "./tools/requests/getRequests";
+import {
+  getTaskProgressHandler,
+  getTaskProgressSchema,
   taskProgressHandler,
+  taskProgressSchema,
 } from "./tools/tasks/taskProgress";
-import { taskStatusSchema, taskStatusHandler } from "./tools/tasks/taskStatus";
-import { getAllUsersSchema, getAllUsersHandler } from "./tools/users/allUsers";
+import { getAllTasksHandler, getAllTasksSchema } from "./tools/tasks/tasks";
+import { taskStatusHandler, taskStatusSchema } from "./tools/tasks/taskStatus";
 import {
-  getUserByUsernameSchema,
-  getUserByUsernameHandler,
-  getUserProfileSchema,
-  getUserProfileHandler,
-} from "./tools/users/userProfile";
-import { userSearchSchema, userSearchHandler } from "./tools/users/userSearch";
+  getUserTasksHandler,
+  getUserTasksSchema,
+} from "./tools/tasks/userTasks";
+import { getAllUsersHandler, getAllUsersSchema } from "./tools/users/allUsers";
 import {
-  applyOooSchema,
   applyOooHandler,
-  cancelOooSchema,
+  applyOooSchema,
   cancelOooHandler,
+  cancelOooSchema,
 } from "./tools/users/ooo";
+import {
+  getUserByUsernameHandler,
+  getUserByUsernameSchema,
+  getUserProfileHandler,
+  getUserProfileSchema,
+} from "./tools/users/userProfile";
+import { userSearchHandler, userSearchSchema } from "./tools/users/userSearch";
 
 const server = new McpServer(
   {
@@ -125,6 +139,52 @@ server.registerTool(
     inputSchema: cancelOooSchema,
   },
   cancelOooHandler,
+);
+
+server.registerTool(
+  "getAllTaskRequests",
+  {
+    description: "Fetch all TCR requests with status and size filters",
+    inputSchema: getTaskRequestSchema,
+  },
+  getTaskRequestsHandler,
+);
+
+server.registerTool(
+  "getAllExtensionRequests",
+  {
+    description:
+      "Fetch all extension requests with status, taskId, and assigneeId filters",
+    inputSchema: getExtensionRequestsSchema,
+  },
+  getExtensionRequestsHandler,
+);
+
+server.registerTool(
+  "createTaskRequest",
+  {
+    description: "Create a new task creation request (TCR)",
+    inputSchema: createTaskRequestSchema,
+  },
+  createTaskRequestHandler,
+);
+
+server.registerTool(
+  "createExtensionRequest",
+  {
+    description: "Create a new extension request (ER) for a task",
+    inputSchema: createExtensionRequestSchema,
+  },
+  createExtensionRequestHandler,
+);
+
+server.registerTool(
+  "getTaskProgress",
+  {
+    description: "Fetch all progress updates for a task",
+    inputSchema: getTaskProgressSchema,
+  },
+  getTaskProgressHandler,
 );
 
 async function main() {

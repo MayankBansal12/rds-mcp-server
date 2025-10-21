@@ -14,3 +14,15 @@ export enum State {
   OOO = "OOO",
   IDLE = "IDLE",
 }
+
+export enum TaskRequestStatus {
+  PENDING = "pending",
+  APPROVED = "approved",
+  REJECTED = "rejected",
+}
+
+export enum ExtensionRequestStatus {
+  PENDING = "PENDING",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+}
