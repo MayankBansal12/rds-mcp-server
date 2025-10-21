@@ -1,8 +1,6 @@
 import { makeApiRequest } from "../../helper";
 import { z } from "zod";
 import { Status } from "../../types";
-const BASE_URL =
-  process.env.API_BASE_URL || "https://staging-api.realdevsquad.com";
 
 export const getUserTasksSchema = {
   username: z.string().describe("Username to fetch tasks for!"),
@@ -22,7 +20,8 @@ export const getUserTasksHandler = async ({
   status,
 }: getAllTasksArgs) => {
   const taskEndpoint =
-    `${BASE_URL}/tasks/${username}` + (!!status ? `?status=${status}` : "");
+    `${process.env.API_BASE_URL}/tasks/${username}` +
+    (!!status ? `?status=${status}` : "");
   const tasksData = await makeApiRequest(taskEndpoint);
 
   if (!tasksData) {
