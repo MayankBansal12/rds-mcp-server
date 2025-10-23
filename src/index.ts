@@ -37,6 +37,12 @@ import {
   getUserProfileHandler,
   getUserProfileSchema,
 } from "./tools/users/userProfile";
+import {
+  getUserStatusHandler,
+  getUserStatusSchema,
+  getUserStatusByUserIdHandler,
+  getUserStatusByUserIdSchema,
+} from "./tools/users/userStatus";
 import { userSearchHandler, userSearchSchema } from "./tools/users/userSearch";
 
 const server = new McpServer(
@@ -185,6 +191,24 @@ server.registerTool(
     inputSchema: getTaskProgressSchema,
   },
   getTaskProgressHandler,
+);
+
+server.registerTool(
+  "getUserStatus",
+  {
+    description: "Fetch current user's status",
+    inputSchema: getUserStatusSchema,
+  },
+  getUserStatusHandler,
+);
+
+server.registerTool(
+  "getUserStatusByUsername",
+  {
+    description: "Fetch a specific user's status by their userId",
+    inputSchema: getUserStatusByUserIdSchema,
+  },
+  getUserStatusByUserIdHandler,
 );
 
 async function main() {
