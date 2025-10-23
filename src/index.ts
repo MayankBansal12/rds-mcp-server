@@ -44,7 +44,8 @@ import {
   getUserStatusByUserIdSchema,
 } from "./tools/users/userStatus";
 import { userSearchHandler, userSearchSchema } from "./tools/users/userSearch";
-
+import { tasksResourceConfig } from "./resources/tasksResource";
+import { userResourceConfig } from "./resources/userResource";
 const server = new McpServer(
   {
     name: "rds-mcp-server",
@@ -52,6 +53,7 @@ const server = new McpServer(
   },
   {
     capabilities: {
+      resources: {},
       tools: {},
     },
   },
@@ -209,6 +211,20 @@ server.registerTool(
     inputSchema: getUserStatusByUserIdSchema,
   },
   getUserStatusByUserIdHandler,
+);
+
+server.registerResource(
+  tasksResourceConfig.name,
+  tasksResourceConfig.uri,
+  tasksResourceConfig.metadata,
+  tasksResourceConfig.callback,
+);
+
+server.registerResource(
+  userResourceConfig.name,
+  userResourceConfig.uri,
+  userResourceConfig.metadata,
+  userResourceConfig.callback,
 );
 
 async function main() {
