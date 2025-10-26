@@ -1,4 +1,5 @@
 const AUTH_TOKEN = process.env.AUTH_TOKEN || "";
+const COOKIE_NAME = process.env.COOKIE_NAME || "";
 
 export async function makeApiRequest<TReq = unknown, TRes = unknown>(
   url: string,
@@ -10,7 +11,7 @@ export async function makeApiRequest<TReq = unknown, TRes = unknown>(
     method,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${AUTH_TOKEN}`,
+      Cookie: `${COOKIE_NAME}=${AUTH_TOKEN}`,
       ...customHeaders,
     },
   };

@@ -35,7 +35,7 @@ export const taskStatusHandler = async ({
     } as any;
   }
 
-  const statusEndpoint = `${process.env.API_BASE_URL}/tasks/${id}/status`;
+  const statusEndpoint = `${process.env.API_BASE_URL}/tasks/self/${id}`;
 
   const requestBody = {
     ...(status && { status }),
