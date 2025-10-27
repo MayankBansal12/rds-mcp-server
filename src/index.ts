@@ -1,5 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { tasksResourceConfig } from "./resources/tasksResource";
+import { userResourceConfig } from "./resources/userResource";
 import {
   createExtensionRequestHandler,
   createExtensionRequestSchema,
@@ -37,15 +39,14 @@ import {
   getUserProfileHandler,
   getUserProfileSchema,
 } from "./tools/users/userProfile";
+import { userSearchHandler, userSearchSchema } from "./tools/users/userSearch";
 import {
-  getUserStatusHandler,
-  getUserStatusSchema,
   getUserStatusByUserIdHandler,
   getUserStatusByUserIdSchema,
+  getUserStatusHandler,
+  getUserStatusSchema,
 } from "./tools/users/userStatus";
-import { userSearchHandler, userSearchSchema } from "./tools/users/userSearch";
-import { tasksResourceConfig } from "./resources/tasksResource";
-import { userResourceConfig } from "./resources/userResource";
+
 const server = new McpServer(
   {
     name: "rds-mcp-server",

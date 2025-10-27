@@ -1,5 +1,5 @@
-import { makeApiRequest } from "../../helper";
 import { z } from "zod";
+import { makeApiRequest } from "../../helper";
 
 export const applyOooSchema = {
   from: z.number().describe("Start timestamp for OOO period"),
