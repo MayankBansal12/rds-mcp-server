@@ -1,5 +1,5 @@
-import { makeApiRequest } from "../../helper";
 import { z } from "zod";
+import { makeApiRequest } from "../../helper";
 
 export const getUserByUsernameSchema = {
   username: z.string().describe("Username of the user to fetch"),

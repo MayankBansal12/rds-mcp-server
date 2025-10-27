@@ -11,8 +11,12 @@ export const createTaskRequestSchema = {
     .describe(
       "GitHub issue URL (e.g., https://github.com/Real/website/issues/1)",
     ),
-  proposedDeadline: z.number().describe("Proposed deadline as timestamp"),
-  proposedStartDate: z.number().describe("Proposed start date as timestamp"),
+  proposedDeadline: z
+    .number()
+    .describe("Proposed deadline as unix timestamp (in ms)"),
+  proposedStartDate: z
+    .number()
+    .describe("Proposed start date as unix timestamp (in ms)"),
   userId: z.string().describe("User ID for the task request"),
 };
 
@@ -72,7 +76,9 @@ export const createTaskRequestHandler = async ({
 
 export const createExtensionRequestSchema = {
   assignee: z.string().describe("Assignee username for the task"),
-  newEndsOn: z.number().describe("New end timestamp for the task"),
+  newEndsOn: z
+    .number()
+    .describe("New end timestamp for the task (unix timestamp in seconds)"),
   oldEndsOn: z.number().describe("Original end timestamp for the task"),
   reason: z.string().describe("Reason for extension request"),
   taskId: z.string().describe("Task ID for the extension request"),

@@ -1,5 +1,5 @@
-import { makeApiRequest } from "../../helper";
 import { z } from "zod";
+import { makeApiRequest } from "../../helper";
 
 export const getUserStatusByUserIdSchema = {
   userId: z.string().describe("UserId of the user to fetch status for"),
